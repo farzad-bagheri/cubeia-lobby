@@ -1,0 +1,48 @@
+@import "../../../common/globals.scss";
+
+%studios-item-base {
+    width: 150px;
+    height: 88px;
+    border-radius: $gapSmall;
+    background-size: contain;
+    transition: all 300ms ease-in-out !important;
+}
+
+.studios-item {
+    @extend %studios-item-base;
+    cursor: pointer;
+    border: 1px solid #111;
+    filter: grayscale(75%);
+    &:hover {
+        filter: grayscale(0);
+        border: 1px solid $colorTheme1;
+    }
+}
+
+.studios-item-active {
+    @extend %studios-item-base;
+    border: 1px solid $colorTheme2;
+    box-shadow: 0 0 12px $colorTheme2;
+}
+
+.studios-list {
+    position: relative;
+    padding: $gapMedium;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min-content, 150px));
+    row-gap: $gapMedium;
+    column-gap: $gapMedium;
+    justify-content: center;
+    justify-items: center;
+    background: $darkBg;
+    border-top: 1px solid $colorTheme1;
+}
+
+.show-more-open {
+    transform: rotate(180deg);
+    transition: transform 300ms !important;
+}
+
+.show-more-closed {
+    transform: rotate(0deg);
+}

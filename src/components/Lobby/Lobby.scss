@@ -1,0 +1,47 @@
+@import "../../common/globals.scss";
+
+.lobby-toolbar {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: $toolbarHeight;
+    background-color: whitesmoke;
+    box-shadow: 0 0 24px lightgray;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+}
+
+.lobby-toolbar-items {
+    width: 96%;
+    display: grid;
+    grid-template-rows: min-content;
+    grid-template-columns: 1fr 150px;
+    align-content: center;
+    align-items: center;
+}
+
+.lobby-content {
+    margin-top: $toolbarHeight;
+}
+
+.lobby-games {
+    min-height: 100vh;
+    padding: $gapLarge;
+    background: radial-gradient(#ddd, white);
+}
+
+.lobby-footer {
+    width: 100%;
+    height: 300px;
+    border-top: 2px solid $colorTheme1;
+    background: $darkBg;
+}
+
+.lobby-error
+{
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}

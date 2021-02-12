@@ -1,0 +1,13 @@
+@import "../../common/globals.scss";
+
+.error404-bg {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        max-width: 300px;
+    }
+}

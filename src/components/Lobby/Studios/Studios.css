@@ -1,0 +1,46 @@
+.studios-item-active, .studios-item {
+  width: 150px;
+  height: 88px;
+  border-radius: 8px;
+  background-size: contain;
+  transition: all 300ms ease-in-out !important;
+}
+
+.studios-item {
+  cursor: pointer;
+  border: 1px solid #111;
+  filter: grayscale(75%);
+}
+.studios-item:hover {
+  filter: grayscale(0);
+  border: 1px solid #ff5722;
+}
+
+.studios-item-active {
+  border: 1px solid #f50258;
+  box-shadow: 0 0 12px #f50258;
+}
+
+.studios-list {
+  position: relative;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min-content, 150px));
+  row-gap: 12px;
+  column-gap: 12px;
+  justify-content: center;
+  justify-items: center;
+  background: radial-gradient(ellipse at 50% 20%, black, #111);
+  border-top: 1px solid #ff5722;
+}
+
+.show-more-open {
+  transform: rotate(180deg);
+  transition: transform 300ms !important;
+}
+
+.show-more-closed {
+  transform: rotate(0deg);
+}
+
+/*# sourceMappingURL=Studios.css.map */

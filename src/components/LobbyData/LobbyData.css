@@ -1,0 +1,15 @@
+.lobby-data-message {
+  width: 100%;
+  min-height: 100vh;
+  color: white;
+  background-color: #191f26;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.lobby-data-message img {
+  max-width: 100%;
+}
+
+/*# sourceMappingURL=LobbyData.css.map */

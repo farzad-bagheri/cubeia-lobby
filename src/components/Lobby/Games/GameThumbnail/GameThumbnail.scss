@@ -1,0 +1,25 @@
+@import "../../../../common/globals.scss";
+
+.game-thumbnail {
+    cursor: pointer;
+
+    border: 1px solid lightgray;
+    transform: scale(1);
+    filter: grayscale(50%);
+    box-shadow: none;
+
+    transition: all 300ms ease-in-out !important;
+
+    &:hover {
+        border: 1px solid $colorTheme2;
+        transform: scale(1.02);
+        filter: grayscale(0);
+        box-shadow: 0 0 16px lightgray;
+    }
+
+    img {
+        max-width: 100%;
+        border-radius: $gapSmall;
+        border: 1px solid lightgray;
+    }
+}

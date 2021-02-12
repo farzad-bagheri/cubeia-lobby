@@ -1,0 +1,15 @@
+@import "../../common/globals.scss";
+
+.lobby-data-message {
+    width: 100%;
+    min-height: 100vh;
+    color: $colorHighlight3;
+    background-color: $colorTheme3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,35 @@
+//gloal colors
+$colorTheme1: #ff5722;
+$colorHighlight1: white;
+$colorTheme2: #f50258;
+$colorHighlight2: black;
+$colorTheme3: #191f26;
+$colorHighlight3: white;
+
+//gap
+$gapXSmall: 4px;
+$gapSmall: 8px;
+$gapMedium: 12px;
+$gapLarge: 16px;
+$gapXLarge: 24px;
+$gapXXLarge: 32px;
+
+$darkBg: radial-gradient(ellipse at 50% 20%, black, #111);
+
+//misc
+$toolbarHeight: 64px;
+
+//media query
+$breakPoint: 1024px;
+
+@mixin screenLarge {
+  @media (min-width: $breakPoint+1) {
+    @content;
+  }
+}
+
+@mixin screenNonLarge {
+  @media (max-width: $breakPoint) {
+    @content;
+  }
+}

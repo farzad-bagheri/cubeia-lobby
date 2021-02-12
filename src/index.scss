@@ -1,3 +1,5 @@
+@import "./common/globals.scss";
+
 :root {
   writing-mode: horizontal-tb;
   text-orientation: upright;
@@ -10,64 +12,57 @@ html {
 
 body {
   margin: 0;
-}
-@media (max-width: 1024px) {
-  body {
+  @include screenNonLarge {
     font-size: 14px;
   }
-}
-@media (min-width: 1025px) {
-  body {
+  @include screenLarge {
     font-size: 16px;
   }
 }
 
+// global CSSTransition animations
 .fade-enter {
   opacity: 0;
 }
-
 .fade-exit {
   opacity: 1;
 }
-
 .fade-enter-active {
   opacity: 1;
 }
-
 .fade-exit-active {
   opacity: 0;
 }
-
 .fade-enter-active,
 .fade-exit-active {
   transition: opacity 500ms;
 }
 
+// global classes
+
 .cubeia-link {
   text-decoration: none;
-}
-.cubeia-link:hover {
-  font-style: italic;
-  color: #f50258;
-}
-.cubeia-link::after {
-  margin-top: 4px;
-  content: "";
-  display: block;
-  border-bottom: solid 2px #f50258;
-  transform-origin: 100% 50%;
-  transform: scaleX(0);
-  transition: transform 0.3s ease-in-out;
-}
-.cubeia-link:hover::after {
-  transform: scaleX(1);
+  &:hover {
+    font-style: italic;
+    color: $colorTheme2;
+  }
+  &::after {
+    margin-top: 4px;
+    content: "";
+    display: block;
+    border-bottom: solid 2px $colorTheme2;
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 .simple-grid {
   display: grid;
   grid-template-rows: repeat(auto-fill, min-content);
   grid-template-columns: 1fr;
-  row-gap: 12px;
+  row-gap: $gapMedium;
 }
-
-/*# sourceMappingURL=index.css.map */

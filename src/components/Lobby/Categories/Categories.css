@@ -1,0 +1,9 @@
+.categories-buttons {
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  row-gap: 8px;
+  column-gap: 12px;
+}
+
+/*# sourceMappingURL=Categories.css.map */

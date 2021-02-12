@@ -1,0 +1,9 @@
+@import "../../../common/globals.scss";
+
+.categories-buttons {
+    padding: $gapMedium;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    row-gap: $gapSmall;
+    column-gap: $gapMedium;
+}

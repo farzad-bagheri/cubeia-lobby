@@ -1,0 +1,21 @@
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  row-gap: 12px;
+  column-gap: 12px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.games-content {
+  min-height: 100vh;
+  display: grid;
+  row-gap: 12px;
+  justify-items: center;
+  align-items: center;
+}
+.games-content img {
+  max-width: 50%;
+}
+
+/*# sourceMappingURL=Games.css.map */

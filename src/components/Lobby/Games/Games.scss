@@ -1,0 +1,22 @@
+@import "../../../common/globals.scss";
+
+.games-grid {    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    row-gap: $gapMedium;
+    column-gap: $gapMedium;
+    justify-content: center;
+    justify-items: center;
+}
+
+.games-content {
+    min-height: 100vh;
+    display: grid;
+    row-gap: $gapMedium;
+    justify-items: center;
+    align-items: center;
+
+    img {
+        max-width: 50%;
+    }
+}

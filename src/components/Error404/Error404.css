@@ -1,0 +1,12 @@
+.error404-bg {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.error404-bg img {
+  max-width: 300px;
+}
+
+/*# sourceMappingURL=Error404.css.map */

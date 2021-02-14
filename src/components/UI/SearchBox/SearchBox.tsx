@@ -16,7 +16,7 @@ interface ISearchBoxProps {
 class SearchBox extends Component<ISearchBoxProps> {
 
     validateQuery(query: string): string | undefined {
-        if (query.match(/[^a-zA-Z 0-9]/)) {
+        if (query && query.match(/[^a-zA-Z 0-9]/)) {
             return 'Only english letters and digits are allowed.'
         }
         return undefined;

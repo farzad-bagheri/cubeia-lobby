@@ -9,6 +9,8 @@ import { Component } from "react";
 import { connect } from 'react-redux';
 import { APP_NAME, Command, PageId, PageTitles } from '../../common/define';
 import { IAppState } from '../../redux/reducer';
+import Cookie from '../UI/Cookie/Cookie';
+import SearchBox from '../UI/SearchBox/SearchBox';
 import Categories from './Categories/Categories';
 import Games from './Games/Games';
 import './Lobby.css';
@@ -20,10 +22,11 @@ enum LobbyPhase {
     Error = 3
 }
 
-interface IStateProps { categoryId: number }
+interface IStateProps { categoryId: number, isMobile: boolean }
 
 interface IDispatchProps {
     handleSetCurrency: (currency: string) => void;
+    handleSetGameFilterQuery: (gameFilterQuery: string) => void;
 }
 
 interface IOwnProps { }
@@ -33,8 +36,7 @@ interface IAllProps extends IStateProps, IDispatchProps, IOwnProps { }
 class Lobby extends Component<IAllProps> {
 
     state = {
-        phase: LobbyPhase.Initial,
-        currency: 'EUR'
+        phase: LobbyPhase.Initial, currency: 'EUR', query: '', queryError: undefined
     };
 
     handleCurrencyChanged = (event: React.ChangeEvent<{ name?: string; value: unknown }>, child: React.ReactNode) => {
@@ -43,6 +45,12 @@ class Lobby extends Component<IAllProps> {
             this.setState({ currency });
             this.props.handleSetCurrency(currency);
         }
+    }
+
+    handleQueryChange = (query: string, queryError: string | undefined) => {
+        this.setState({ query, queryError });
+        if (!queryError)
+            this.props.handleSetGameFilterQuery(query);
     }
 
     componentDidMount() {
@@ -69,8 +77,16 @@ class Lobby extends Component<IAllProps> {
                     content = <div>
 
                         <div className="lobby-toolbar">
-                            <div className="lobby-toolbar-items">
+                            <div className={this.props.isMobile ? "lobby-toolbar-items-mobile" : "lobby-toolbar-items"}>
+
                                 <a href="https://www.neobet.io/"><img src="/static/media/logo.svg" alt="logo" /></a>
+
+                                {this.props.isMobile ? <></> : <SearchBox
+                                    title="Find in lobby"
+                                    value={this.state.query}
+                                    valueError={this.state.queryError}
+                                    onChange={this.handleQueryChange} />}
+
                                 <FormControl variant="standard">
                                     <InputLabel >Currency</InputLabel>
                                     <Select value={this.state.currency} onChange={this.handleCurrencyChanged}>
@@ -79,26 +95,22 @@ class Lobby extends Component<IAllProps> {
                                         <MenuItem value={'mBTC'}>mBTC</MenuItem>
                                     </Select>
                                 </FormControl>
+
                             </div>
                         </div>
 
-                        <div className="lobby-content">
+                        <div className="lobby-categories">
                             <Categories />
-                            {this.props.categoryId >= 0 ?
-                                <>
-                                    <Studios />
-                                    <div className="lobby-games">
-                                        <Games editMode={true} />
-                                    </div>
-                                </> :
-                                <div className="lobby-games">
-                                    <Games editMode={false} />
-                                </div>}
                         </div>
 
-                        <div className="lobby-footer"></div>
+                        <div className="lobby-content">
+                            <Studios />
+                            <Games />
+                        </div>
 
-                    </div>
+                        <Cookie />
+
+                    </div >
                     break;
                 }
             case LobbyPhase.Error:
@@ -121,9 +133,15 @@ class Lobby extends Component<IAllProps> {
 }
 
 export default connect<IStateProps, IDispatchProps, IOwnProps, IAppState>(
-    (state: IAppState) => { return { categoryId: state.categoryId } }
+    (state: IAppState) => {
+        return {
+            isMobile: state.isMobile,
+            categoryId: state.categoryId
+        }
+    }
     , dispatch => {
         return {
-            handleSetCurrency: (currency: string) => { dispatch({ type: Command.SetCurrency, currency }) }
+            handleSetCurrency: (currency: string) => { dispatch({ type: Command.SetCurrency, currency }) },
+            handleSetGameFilterQuery: (gameFilterQuery: string) => { dispatch({ type: Command.SetGameFilter, gameFilterQuery }) }
         }
     })(Lobby);

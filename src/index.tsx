@@ -8,6 +8,14 @@ import reducer from './redux/reducer';
 
 const store = createStore(reducer);
 
+//We use gsap, a not react lib, to implement animations.
+//this gives type script the confidence that gsap is a valid property of window.
+declare global {
+  interface Window {
+    gsap: any;
+  }
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

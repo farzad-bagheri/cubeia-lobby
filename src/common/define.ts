@@ -1,4 +1,4 @@
-export const APP_NAME = 'Cubeia';
+export const APP_NAME = 'NeoBet';
 
 export enum Command {
     SetIsMobile = 'SET_IS_MOBILE',
@@ -6,6 +6,7 @@ export enum Command {
     SetCategory = 'SetCategory',
     SetFavourites = 'SetFavourites',
     SetStudio = 'SetStudio',
+    SetGameFilter = 'SetGameFilter',
 }
 
 export enum PagePath {

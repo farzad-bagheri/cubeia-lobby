@@ -1,21 +1,37 @@
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-  row-gap: 12px;
-  column-gap: 12px;
-  justify-content: center;
-  justify-items: center;
-}
-
-.games-content {
+.games-box {
+  width: 100%;
   min-height: 100vh;
   display: grid;
-  row-gap: 12px;
+  grid-template-rows: 1fr, 48px;
+  grid-template-columns: 100%;
   justify-items: center;
-  align-items: center;
+  align-content: space-between;
 }
-.games-content img {
-  max-width: 50%;
+
+.games-grid {
+  width: 100%;
+  max-width: 1200px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
+  row-gap: 16px;
+  column-gap: 16px;
+}
+@media (max-width: 1024px) {
+  .games-grid {
+    justify-content: center;
+  }
+}
+
+.games-pagination {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(white, lightgray);
+  box-shadow: 0 2px 8px #ff5722;
+  border-top: 1px solid #ff5722;
 }
 
 /*# sourceMappingURL=Games.css.map */

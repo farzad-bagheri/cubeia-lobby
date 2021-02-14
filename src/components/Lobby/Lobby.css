@@ -2,7 +2,7 @@
   top: 0;
   position: fixed;
   width: 100%;
-  height: 64px;
+  height: 84px;
   background-color: whitesmoke;
   box-shadow: 0 0 24px lightgray;
   z-index: 999;
@@ -10,30 +10,33 @@
   justify-content: center;
 }
 
-.lobby-toolbar-items {
+.lobby-toolbar-items-mobile, .lobby-toolbar-items {
   width: 96%;
   display: grid;
   grid-template-rows: min-content;
-  grid-template-columns: 1fr 150px;
+  column-gap: 12px;
   align-content: center;
   align-items: center;
 }
 
+.lobby-toolbar-items {
+  grid-template-columns: 200px 1fr 150px;
+}
+
+.lobby-toolbar-items-mobile {
+  grid-template-columns: 200px 1fr;
+}
+
+.lobby-categories {
+  margin-top: 84px;
+}
+
 .lobby-content {
-  margin-top: 64px;
-}
-
-.lobby-games {
-  min-height: 100vh;
-  padding: 16px;
-  background: radial-gradient(#ddd, white);
-}
-
-.lobby-footer {
   width: 100%;
-  height: 300px;
-  border-top: 2px solid #ff5722;
-  background: radial-gradient(ellipse at 50% 20%, black, #111);
+  background: url(../../static/media/game_bg_pattern.png), radial-gradient(circle at 30% 20%, #191f26, #051324);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .lobby-error {
@@ -41,6 +44,7 @@
   display: grid;
   justify-content: center;
   align-items: center;
+  background: radial-gradient(circle at 30% 20%, #191f26, #051324);
 }
 
 /*# sourceMappingURL=Lobby.css.map */

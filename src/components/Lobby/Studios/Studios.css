@@ -21,8 +21,11 @@
   box-shadow: 0 0 12px #f50258;
 }
 
+.studios-layout {
+  box-shadow: 0 4px 8px #051324;
+}
+
 .studios-list {
-  position: relative;
   padding: 12px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min-content, 150px));
@@ -30,8 +33,24 @@
   column-gap: 12px;
   justify-content: center;
   justify-items: center;
-  background: radial-gradient(ellipse at 50% 20%, black, #111);
-  border-top: 1px solid #ff5722;
+}
+
+.studios-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+.studios-collapse {
+  margin-left: 12px;
+  height: 64px;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: min-content min-content;
+  column-gap: 12px;
+  align-items: center;
+  align-content: center;
 }
 
 .show-more-open {

@@ -1,10 +1,8 @@
 //gloal colors
 $colorTheme1: #ff5722;
-$colorHighlight1: white;
 $colorTheme2: #f50258;
-$colorHighlight2: black;
 $colorTheme3: #191f26;
-$colorHighlight3: white;
+$colorTheme4: #051324;
 
 //gap
 $gapXSmall: 4px;
@@ -14,10 +12,10 @@ $gapLarge: 16px;
 $gapXLarge: 24px;
 $gapXXLarge: 32px;
 
-$darkBg: radial-gradient(ellipse at 50% 20%, black, #111);
+$darkBg: radial-gradient(circle at 30% 20%, $colorTheme3, $colorTheme4);
 
 //misc
-$toolbarHeight: 64px;
+$toolbarHeight: 84px;
 
 //media query
 $breakPoint: 1024px;

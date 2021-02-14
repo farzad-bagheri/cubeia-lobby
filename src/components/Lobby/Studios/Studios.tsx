@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -31,7 +32,7 @@ interface IAllProps extends IStateProps, IDispatchProps, IOwnProps { }
 
 class Studios extends Component<IAllProps> {
 
-    state = { phase: StudiosPhase.Initial, expanded: true };
+    state = { phase: StudiosPhase.Initial, expanded: false };
 
     componentDidMount() {
         if (window.lobbyData && window.lobbyData.studios) {
@@ -52,11 +53,12 @@ class Studios extends Component<IAllProps> {
                 }
             case StudiosPhase.Loaded:
                 {
-                    let items = null;
                     if (this.props.studios.length === 0) {
-                        items = <Alert severity="info" variant="filled" >Empty!</Alert>
+                        content = <div className="studios-message">
+                            <Alert severity="info" variant="filled" >No provider found!</Alert>
+                        </div>
                     } else {
-                        items = this.props.studios.map((studio: IStudio) => {
+                        const items = this.props.studios.map((studio: IStudio) => {
                             return <Tooltip title={studio.name} arrow key={studio.id}>
                                 <div className={this.props.studioId === studio.id ? "studios-item-active" : "studios-item"}
                                     style={{ backgroundImage: `url('${studio.imageUrl}')` }}
@@ -64,13 +66,15 @@ class Studios extends Component<IAllProps> {
                                 </div>
                             </Tooltip>
                         });
+                        content = <div className="studios-list">{items}</div>
                     }
-                    content = <div className="studios-list">{items} </div>
                     break;
                 }
             case StudiosPhase.Error:
                 {
-                    content = <Alert severity="error" variant="filled">Studios: Data not available!</Alert>
+                    content = <div className="studios-message">
+                        <Alert severity="error" variant="filled">Studios: Data not available!</Alert>
+                    </div>
                     break;
                 }
             default:
@@ -78,14 +82,19 @@ class Studios extends Component<IAllProps> {
                     break;
                 }
         }
-        return <div>
-            <Tooltip title="Toggle providers list" arrow>
-                <IconButton
-                    className={this.state.expanded ? "show-more-open" : "show-more-closed"}
-                    onClick={_ => { this.setState({ expanded: !this.state.expanded }) }}>
-                    <ExpandMoreIcon />
-                </IconButton>
-            </Tooltip>
+        return <div className="studios-layout">
+
+            <div className="studios-collapse">
+                <Typography variant="h6" color="primary">Providers</Typography>
+                <Tooltip title="Toggle providers list" arrow>
+                    <IconButton color="secondary"
+                        className={this.state.expanded ? "show-more-open" : "show-more-closed"}
+                        onClick={_ => { this.setState({ expanded: !this.state.expanded }) }}>
+                        <ExpandMoreIcon />
+                    </IconButton>
+                </Tooltip>
+            </div>
+
             <Collapse in={this.state.expanded} timeout="auto">
                 {content}
             </Collapse>

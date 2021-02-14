@@ -40,38 +40,37 @@ class Categories extends Component<IAllProps> {
     }
 
     componentDidMount() {
-        
-        if (window.lobbyData && window.lobbyData.categories) {
 
-            let sortedCategories: ICategory[] = window.lobbyData.categories.sort((a: ICategory, b: ICategory) => b.lobbyOrder - a.lobbyOrder);
-
-            this.contentTabs = sortedCategories.map((category: ICategory) => {
-                return <Tab key={category.id} label={category.name}
-                    onClick={_ => { this.props.handleSetCategory(category.id, category.studios, category.games) }} />
-            });
-
-            this.contentTabs.push(<Tab key={-1} label="My Favourites"
-                onClick={_ => { this.props.handleSetFavourites() }} />);
-
-            this.contentButtons = sortedCategories.map((category: ICategory) => {
-                return <Button variant="contained" color="primary" key={category.id}
-                    onClick={_ => { this.props.handleSetCategory(category.id, category.studios, category.games) }}>
-                    {category.name}</Button>
-            });
-
-            this.contentButtons.push(<Button variant="contained" color="primary" key={-1}
-                onClick={_ => { this.props.handleSetFavourites() }}>
-                My Favourites</Button>);
-
-            const defaultCategoryIndex = sortedCategories.length - 1;
-            const defaultCategory: ICategory = sortedCategories[defaultCategoryIndex];
-            this.props.handleSetCategory(defaultCategory.id, defaultCategory.studios, defaultCategory.games);
-
-            this.setState({ phase: CategoriesPhase.Loaded, tabIndex: defaultCategoryIndex });
-        }
-        else {
+        if (!window.lobbyData || !window.lobbyData.categories) {
             this.setState({ phase: CategoriesPhase.Error });
+            return;
         }
+
+        let categories: ICategory[] = window.lobbyData.categories;
+
+        this.contentTabs = categories.map((category: ICategory) => {
+            return <Tab key={category.id} label={category.name}
+                onClick={_ => { this.props.handleSetCategory(category.id, category.studios, category.games) }} />
+        });
+
+        this.contentTabs.push(<Tab key={-1} label="My Favourites"
+            onClick={_ => { this.props.handleSetFavourites() }} />);
+
+        this.contentButtons = categories.map((category: ICategory) => {
+            return <Button variant="contained" color="primary" key={category.id}
+                onClick={_ => { this.props.handleSetCategory(category.id, category.studios, category.games) }}>
+                {category.name}</Button>
+        });
+
+        this.contentButtons.push(<Button variant="contained" color="primary" key={-1}
+            onClick={_ => { this.props.handleSetFavourites() }}>
+            My Favourites</Button>);
+
+        const defaultCategoryIndex = categories.length - 1;
+        const defaultCategory: ICategory = categories[defaultCategoryIndex];
+        this.props.handleSetCategory(defaultCategory.id, defaultCategory.studios, defaultCategory.games);
+
+        this.setState({ phase: CategoriesPhase.Loaded, tabIndex: defaultCategoryIndex });
     }
 
     render() {
@@ -86,7 +85,8 @@ class Categories extends Component<IAllProps> {
                 {
                     content = this.props.isMobile ?
                         <div className="categories-buttons">{this.contentButtons}</div> :
-                        <Tabs value={this.state.tabIndex} onChange={this.handleTabIndexChanged}
+                        <Tabs
+                            value={this.state.tabIndex} onChange={this.handleTabIndexChanged}
                             indicatorColor="primary" textColor="primary" variant="scrollable"
                             scrollButtons="auto">{this.contentTabs}</Tabs>
                     break;
@@ -101,7 +101,7 @@ class Categories extends Component<IAllProps> {
                     break;
                 }
         }
-        return content;
+        return <div className="categories-box">{content}</div>;
     }
 }
 

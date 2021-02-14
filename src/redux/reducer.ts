@@ -1,6 +1,8 @@
 import * as define from '../common/define';
-import { filterGameList, IGame } from '../models/Game';
-import { filterStudioList, IStudio } from '../models/Studio';
+import { GameController } from '../controllers/Game';
+import { StudioController } from '../controllers/Studio';
+import { IGame } from '../models/Game';
+import { IStudio } from '../models/Studio';
 
 interface IAction {
     type: string;
@@ -47,6 +49,11 @@ export interface IAppState {
      * An array of games that are filtered by the current studio 
      */
     games: IGame[];
+
+    /**
+     * Query to filter the game list
+     */
+    gameFilterQuery: string
 }
 
 let initialState: IAppState = {
@@ -58,6 +65,7 @@ let initialState: IAppState = {
     studios: [],
     gameIds: [],
     games: [],
+    gameFilterQuery: '',
 };
 
 const reducer = (Oldstate: IAppState = initialState, action: IAction) => {
@@ -73,9 +81,10 @@ const reducer = (Oldstate: IAppState = initialState, action: IAction) => {
                 //set currency
                 newState.currency = action.currency;
                 //get a list of studios which are filtered by the currency
-                newState.studios = [...filterStudioList(Oldstate.studioIds, action.currency)];
+                newState.studios = [...StudioController.getStudios(Oldstate.studioIds, action.currency)];
                 //get a list of games that are members of the current studio
-                newState.games = [...filterGameList(Oldstate.gameIds, newState.studios, Oldstate.studioId)];
+                const studioIndex = newState.studios.findIndex((studio: IStudio) => studio.id === Oldstate.studioId);
+                newState.games = studioIndex < 0 ? [] : [...GameController.gamesFromStudio(Oldstate.gameIds, newState.studios[studioIndex])];
                 break;
             }
         case define.Command.SetCategory:
@@ -87,12 +96,13 @@ const reducer = (Oldstate: IAppState = initialState, action: IAction) => {
                 //set the list of game IDs that come with the current category
                 newState.gameIds = [...action.gameIds];
                 //get a list of studios which are filtered by the currency
-                newState.studios = [...filterStudioList(action.studioIds, Oldstate.currency)];
+                newState.studios = [...StudioController.getStudios(action.studioIds, Oldstate.currency)];
                 if (newState.studios.length > 0) {
                     //use the first studio of the category as the default studio
                     newState.studioId = newState.studios[0].id;
                     //get a list of games that are members of the current studio
-                    newState.games = [...filterGameList(action.gameIds, newState.studios, newState.studioId)];
+                    const studioIndex = newState.studios.findIndex((studio: IStudio) => studio.id === newState.studioId);
+                    newState.games = studioIndex < 0 ? [] : [...GameController.gamesFromStudio(action.gameIds, newState.studios[studioIndex])];
                 }
                 else {
                     //no game matched the filter
@@ -104,6 +114,8 @@ const reducer = (Oldstate: IAppState = initialState, action: IAction) => {
             {
                 //use a negative ID to indicate a special category (favourites) 
                 newState.categoryId = -1;
+                newState.studioIds = [];
+                newState.studios = [];
                 break;
             }
         case define.Command.SetStudio:
@@ -111,7 +123,13 @@ const reducer = (Oldstate: IAppState = initialState, action: IAction) => {
                 //set new studio ID
                 newState.studioId = action.studioId;
                 //get a list of games that are members of the current studio
-                newState.games = [...filterGameList(Oldstate.gameIds, Oldstate.studios, newState.studioId)];
+                const studioIndex = Oldstate.studios.findIndex((studio: IStudio) => studio.id === newState.studioId);
+                newState.games = studioIndex < 0 ? [] : [...GameController.gamesFromStudio(Oldstate.gameIds, newState.studios[studioIndex])];
+                break;
+            }
+        case define.Command.SetGameFilter:
+            {
+                newState.gameFilterQuery = action.gameFilterQuery;
                 break;
             }
         default:

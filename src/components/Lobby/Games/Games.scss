@@ -1,22 +1,36 @@
 @import "../../../common/globals.scss";
 
-.games-grid {    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
-    row-gap: $gapMedium;
-    column-gap: $gapMedium;
-    justify-content: center;
-    justify-items: center;
-}
-
-.games-content {
+.games-box {
+    width: 100%;
     min-height: 100vh;
     display: grid;
-    row-gap: $gapMedium;
+    grid-template-rows: 1fr, 48px;
+    grid-template-columns: 100%;
     justify-items: center;
-    align-items: center;
+    align-content: space-between;
+}
 
-    img {
-        max-width: 50%;
+.games-grid {
+    width: 100%;
+    max-width: 1200px;
+    padding: $gapLarge;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
+    row-gap: $gapLarge;
+    column-gap: $gapLarge;
+
+    @include screenNonLarge {
+        justify-content: center;
     }
+}
+
+.games-pagination {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(white, lightgray);
+    box-shadow: 0 2px 8px $colorTheme1;
+    border-top: 1px solid $colorTheme1;
 }

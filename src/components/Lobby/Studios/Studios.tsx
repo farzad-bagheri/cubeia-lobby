@@ -34,6 +34,17 @@ class Studios extends Component<IAllProps> {
 
     state = { phase: StudiosPhase.Initial, expanded: false };
 
+    mapStudios = (studios: IStudio[]) => {
+        return studios.map((studio: IStudio) => {
+            return <Tooltip title={studio.name} arrow key={studio.id}>
+                <div className={this.props.studioId === studio.id ? "studios-item-active" : "studios-item"}
+                    style={{ backgroundImage: `url('${studio.imageUrl}')` }}
+                    onClick={_ => { this.props.handleSetStudio(studio.id) }}>
+                </div>
+            </Tooltip>
+        });
+    }
+
     componentDidMount() {
         if (window.lobbyData && window.lobbyData.studios) {
             this.setState({ phase: StudiosPhase.Loaded });
@@ -55,18 +66,35 @@ class Studios extends Component<IAllProps> {
                 {
                     if (this.props.studios.length === 0) {
                         content = <div className="studios-message">
-                            <Alert severity="info" variant="filled" >No provider found!</Alert>
+                            <Alert severity="info" variant="filled" >No provider available!</Alert>
                         </div>
                     } else {
-                        const items = this.props.studios.map((studio: IStudio) => {
-                            return <Tooltip title={studio.name} arrow key={studio.id}>
-                                <div className={this.props.studioId === studio.id ? "studios-item-active" : "studios-item"}
-                                    style={{ backgroundImage: `url('${studio.imageUrl}')` }}
-                                    onClick={_ => { this.props.handleSetStudio(studio.id) }}>
+
+                        if (this.props.studios.length > 8) {
+                            const items1 = this.mapStudios(this.props.studios.slice(0, 8));
+                            const items2 = this.mapStudios(this.props.studios.slice(8));
+
+                            content = <div>
+                                <div className="studios-list">{items1}</div>
+                                <div className="studios-collapse">
+                                    <Typography color="primary">{this.state.expanded ? "Less" : "More"}</Typography>
+                                    <Tooltip title="Toggle more providers" arrow>
+                                        <IconButton color="primary"
+                                            className={this.state.expanded ? "show-more-open" : "show-more-closed"}
+                                            onClick={_ => { this.setState({ expanded: !this.state.expanded }) }}>
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                    </Tooltip>
                                 </div>
-                            </Tooltip>
-                        });
-                        content = <div className="studios-list">{items}</div>
+                                <Collapse in={this.state.expanded} timeout="auto">
+                                    <div className="studios-list">{items2}</div>
+                                </Collapse>
+                            </div>
+                        }
+                        else {
+                            const items = this.mapStudios(this.props.studios);
+                            content = <div className="studios-list">{items}</div>
+                        }
                     }
                     break;
                 }
@@ -82,23 +110,7 @@ class Studios extends Component<IAllProps> {
                     break;
                 }
         }
-        return <div className="studios-layout">
-
-            <div className="studios-collapse">
-                <Typography variant="h6" color="primary">Providers</Typography>
-                <Tooltip title="Toggle providers list" arrow>
-                    <IconButton color="secondary"
-                        className={this.state.expanded ? "show-more-open" : "show-more-closed"}
-                        onClick={_ => { this.setState({ expanded: !this.state.expanded }) }}>
-                        <ExpandMoreIcon />
-                    </IconButton>
-                </Tooltip>
-            </div>
-
-            <Collapse in={this.state.expanded} timeout="auto">
-                {content}
-            </Collapse>
-        </div>;
+        return <div className="studios-layout">{content}</div>;
     }
 }
 
